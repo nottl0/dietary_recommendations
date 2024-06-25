@@ -91,14 +91,14 @@ def meal_type(foods, meals):
     if count_b == count_l == count_d == 0:
         meal_type = ''
 
-    elif max(count_b, count_l, count_d) == count_l:
-        meal_type = ' for lunch'
+    elif max(count_b, count_l, count_d) == count_b:
+        meal_type = ' for breakfast'
 
     elif max(count_b, count_l, count_d) == count_d:
         meal_type = ' for dinner'
 
     else: 
-        meal_type = ' for breakfast'
+        meal_type = ' for lunch'
 
     return meal_type
 
@@ -125,5 +125,7 @@ def meal_type(foods, meals):
 #     return classes, boxes
 
 # Count number of food items to classify as meal
-def is_meal(num_instances):
-    return  3 <= num_instances and num_instances < 10
+def is_meal(food_classes):
+    return  3 <= len(food_classes) and len(food_classes) < 10
+
+
