@@ -4,7 +4,8 @@ import openai
 from argparse import ArgumentParser
 from ultralytics import YOLO
 from utils import get_food_indices, find_names_by_indices, \
-                find_information_by_names, find_patient_case_by_number
+                find_information_by_names, find_patient_case_by_number, \
+                is_meal, meal_type
 
 
 # Get the image path

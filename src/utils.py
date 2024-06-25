@@ -89,16 +89,16 @@ def meal_type(foods, meals):
             count_d += 1
 
     if count_b == count_l == count_d == 0:
-        meal_type = None
+        meal_type = ''
 
     elif max(count_b, count_l, count_d) == count_l:
-        meal_type = 'for lunch'
+        meal_type = ' for lunch'
 
     elif max(count_b, count_l, count_d) == count_d:
-        meal_type = 'for dinner'
+        meal_type = ' for dinner'
 
     else: 
-        meal_type = 'for breakfast'
+        meal_type = ' for breakfast'
 
     return meal_type
 
