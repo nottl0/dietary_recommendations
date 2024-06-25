@@ -114,11 +114,14 @@ def filter_detected_items(result, names_list):
             confs = [r.boxes.conf for r in result if r.boxes.cls == food_index]
             bboxs = [r.boxes.xywhn for r in result if r.boxes.cls == food_index]
             bbox_for_class = bboxs[confs.index(max(confs))]
-            classes.append(names_list[int(food_index)])
-            boxes.append(bbox_for_class)
+            try:
+                classes.append(names_list[int(food_index)])
+
+            except IndexError:
+                print("Index " + index + " is out of range for the names list.")
         else:
-            classes.append(names_list[int(result.boxes.cls)])
-            bboxes.append(result.boxes.xywhn)
+            bbox_for_class = result.boxes.xywhn
+        bboxes.append(bbox_for_class)
     return classes, boxes
 
 # Count number of food items to classify as meal
