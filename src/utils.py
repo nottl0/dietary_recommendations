@@ -74,3 +74,53 @@ def find_patient_case_by_number(patients_file, case_num):
         raise ValueError("No case found for: ", case_num)
     
     return case_description
+
+
+# Determining the meal type based on maximum number of class appearance
+def meal_type(foods, meals):
+    count_b, count_l, count_d = 0,0,0
+    meal_type = ''
+    for food in foods:
+        if food in meals['breakfast']:
+            count_b += 1
+        if food in meals['lunch']:
+            count_l += 1
+        if food in meals['dinner']:
+            count_d += 1
+
+    if count_b == count_l == count_d == 0:
+        meal_type = None
+
+    elif max(count_b, count_l, count_d) == count_l:
+        meal_type = 'for lunch'
+
+    elif max(count_b, count_l, count_d) == count_d:
+        meal_type = 'for dinner'
+
+    else: 
+        meal_type = 'for breakfast'
+
+    return meal_type
+
+
+# Keep the bounding box predictions with the highest confidence
+# Not used for now, but will be helpful when bboxes are needed
+# THIS CAN SUBSTITUTE TO THE FIND_NAME_BY_INDEX FUNCTION 
+def filter_detected_items(result, names_list):
+    classes = []
+    bboxes = []
+    for food_index in set(result.boxes.cls):
+        if len(result.boxes.cls) < len(result.boxes.xywhn):
+            confs = [r.boxes.conf for r in result if r.boxes.cls == food_index]
+            bboxs = [r.boxes.xywhn for r in result if r.boxes.cls == food_index]
+            bbox_for_class = bboxs[confs.index(max(confs))]
+            classes.append(names_list[int(food_index)])
+            boxes.append(bbox_for_class)
+        else:
+            classes.append(names_list[int(result.boxes.cls)])
+            bboxes.append(result.boxes.xywhn)
+    return classes, boxes
+
+# Count number of food items to classify as meal
+def is_meal(food_present):
+    return  3 <= len(food_present) and len(food_present) < 10
