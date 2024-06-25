@@ -106,24 +106,24 @@ def meal_type(foods, meals):
 # Keep the bounding box predictions with the highest confidence
 # Not used for now, but will be helpful when bboxes are needed
 # THIS CAN SUBSTITUTE TO THE FIND_NAME_BY_INDEX FUNCTION 
-def filter_detected_items(result, names_list):
-    classes = []
-    bboxes = []
-    for food_index in set(result.boxes.cls):
-        if len(result.boxes.cls) < len(result.boxes.xywhn):
-            confs = [r.boxes.conf for r in result if r.boxes.cls == food_index]
-            bboxs = [r.boxes.xywhn for r in result if r.boxes.cls == food_index]
-            bbox_for_class = bboxs[confs.index(max(confs))]
-            try:
-                classes.append(names_list[int(food_index)])
+# def filter_detected_items(result, names_list):
+#     classes = []
+#     bboxes = []
+#     for food_index in set(result.boxes.cls):
+#         if len(result.boxes.cls) < len(result.boxes.xywhn):
+#             confs = [r.boxes.conf for r in result if r.boxes.cls == food_index]
+#             bboxs = [r.boxes.xywhn for r in result if r.boxes.cls == food_index]
+#             bbox_for_class = bboxs[confs.index(max(confs))]
+#             try:
+#                 classes.append(names_list[int(food_index)])
 
-            except IndexError:
-                print("Index " + index + " is out of range for the names list.")
-        else:
-            bbox_for_class = result.boxes.xywhn
-        bboxes.append(bbox_for_class)
-    return classes, boxes
+#             except IndexError:
+#                 print("Index " + index + " is out of range for the names list.")
+#         else:
+#             bbox_for_class = result.boxes.xywhn
+#         bboxes.append(bbox_for_class)
+#     return classes, boxes
 
 # Count number of food items to classify as meal
-def is_meal(food_present):
-    return  3 <= len(food_present) and len(food_present) < 10
+def is_meal(num_instances):
+    return  3 <= num_instances and num_instances < 10

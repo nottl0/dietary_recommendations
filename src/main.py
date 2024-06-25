@@ -22,7 +22,7 @@ args = parser.parse_args()
 ########################### YOLO INFERENCE ##############################
 
 # Model inference
-pretrained_model = "/workspace/model/best.onnx"
+pretrained_model = "/workspace/model/yolov8x.pt"
 model = YOLO(pretrained_model)
 
 # Folder to store predictions
@@ -178,7 +178,7 @@ try:
     # If there are less than 3 and more than 10 food items on
     # a given image, it is not considered to be particular meal
     meal = ""
-    if is_meal(food_present) == True:
+    if is_meal(len(result[0].boxes.cls)) == True:
         
         # Defining the meal type for the prompt
         meal = meal_type(food_present, meals_dict)
@@ -197,7 +197,10 @@ except Exception as e:
     print("An error occurred: {e}")
 
 user_prompt = "I need dietary recommendations on consuming the following food" + meal + ":\n" + food_desc + "The recommendations should be given to the patient with the following profile: " + health_cond
-print(user_prompt)
+with open(os.path.join("/workspace/responses/", \
+            os.path.splitext(os.path.basename(args.image_path))[0] + '_prompt.txt'), "a+") as re:
+    re.write("\n i)")
+    re.write(user_prompt)
 
 params = {
     "food_present": food_present,
