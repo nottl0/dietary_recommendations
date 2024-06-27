@@ -39,7 +39,7 @@ if len(result.boxes.cls) != 0:
     decription_file = os.path.join(pred_dir, \
                                     os.path.splitext(os.path.basename(args.image_path))[0] + '.txt')
 
-    with open(decription_file, 'a+') as f:
+    with open(decription_file, 'w+') as f:
         for cls in result.boxes.cls:
             print(cls)
             f.write(str(int(cls.item())) + "\n")
@@ -94,17 +94,21 @@ try:
     print("Found indices: ", indices)
 
     # Converting the indices into food classes from classes list
-    food_present = find_names_by_indices(indices, names)
+    food_instances = find_names_by_indices(indices, names)
+    food_present = list(set(food_instances))
     print("Names found: ", food_present)
 
     # If there are less than 3 and more than 10 food items on
     # a given image, it is not considered to be particular meal
     meal = ""
-    if is_meal(food_present) == True:
+    meal_formatted = ""
+    if is_meal(food_instances) == True:
         
         # Defining the meal type for the prompt
-        meal = meal_type(food_present, meals_dict)
+        meal = meal_type(food_instances, meals_dict)
         print("Meal type: ", meal)
+        if len(meal.split()) != 0:
+            meal_formatted = meal.split()
 
     # Yielding information of the present classes
     food_desc = find_information_by_names(info_file_path, food_present)
@@ -121,7 +125,7 @@ except Exception as e:
 user_prompt = "I need dietary recommendations on consuming the following food" + meal + ":\n" + food_desc + "The recommendations should be given to the patient with the following profile: " + health_cond
 print(user_prompt)
 with open(os.path.join("/workspace/responses/", \
-            os.path.splitext(os.path.basename(args.image_path))[0] + '_' + args.patient_case_number + '_' + meal +'_prompt.txt'), "a+") as re:
+            os.path.splitext(os.path.basename(args.image_path))[0] + '_' + args.patient_case_number + '_' + meal_formatted[0] + "_" + meal_formatted[1] +'_prompt.txt'), "w+") as re:
     re.write(user_prompt)
 
 params = {
@@ -143,5 +147,5 @@ response = completion.choices[0].message.content
 print(response)
 
 with open(os.path.join("/workspace/responses/", \
-            os.path.splitext(os.path.basename(args.image_path))[0] + '_' + args.patient_case_number + '_' + meal + '.txt'), "a+") as re:
+            os.path.splitext(os.path.basename(args.image_path))[0] + '_' + args.patient_case_number + '_' + meal_formatted[0] + "_" + meal_formatted[1] + '.txt'), "w+") as re:
     re.write(response)

@@ -38,6 +38,8 @@ while len(types_found) != 3:
     result = model(full_file_path, iou=0.5,  device=[0])[0]
     food_names = [names[int(index)] for index in result.boxes.cls]
     meal_t = meal_type(food_names, meal_dict)
+    if is_meal(result.boxes.cls) == False:
+        continue
     if meal_t != "" and meal_t not in types_found:
         print(f"{file} \n")
         print(meal_t)

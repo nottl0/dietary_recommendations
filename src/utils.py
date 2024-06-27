@@ -27,7 +27,7 @@ def find_names_by_indices(indices, names_list):
         except IndexError:
             print("Index " + index + " is out of range for the names list.")
 
-    present_names = list(set(present_names))
+    present_names = present_names
 
     return present_names
 
@@ -125,7 +125,7 @@ def meal_type(foods, meals):
 #     return classes, boxes
 
 # Count number of food items to classify as meal
-def is_meal(food_classes):
-    return  3 <= len(food_classes) and len(food_classes) < 10
+def is_meal(instances):
+    return  3 <= len(instances) and len(instances) < 10
 
 
