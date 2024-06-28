@@ -107,8 +107,7 @@ try:
         # Defining the meal type for the prompt
         meal = meal_type(food_instances, meals_dict)
         print("Meal type: ", meal)
-        if len(meal.split()) != 0:
-            meal_formatted = meal.split()
+        meal_formatted = meal.replace(" ", "_")
 
     # Yielding information of the present classes
     food_desc = find_information_by_names(info_file_path, food_present)
@@ -125,7 +124,7 @@ except Exception as e:
 user_prompt = "I need dietary recommendations on consuming the following food" + meal + ":\n" + food_desc + "The recommendations should be given to the patient with the following profile: " + health_cond
 print(user_prompt)
 with open(os.path.join("/workspace/responses/", \
-            os.path.splitext(os.path.basename(args.image_path))[0] + '_' + args.patient_case_number + '_' + meal_formatted[0] + "_" + meal_formatted[1] +'_prompt.txt'), "w+") as re:
+            os.path.splitext(os.path.basename(args.image_path))[0] + '_' + args.patient_case_number + '_' + meal_formatted +'_prompt.txt'), "w+") as re:
     re.write(user_prompt)
 
 params = {
@@ -147,5 +146,5 @@ response = completion.choices[0].message.content
 print(response)
 
 with open(os.path.join("/workspace/responses/", \
-            os.path.splitext(os.path.basename(args.image_path))[0] + '_' + args.patient_case_number + '_' + meal_formatted[0] + "_" + meal_formatted[1] + '.txt'), "w+") as re:
+            os.path.splitext(os.path.basename(args.image_path))[0] + '_' + args.patient_case_number + '_' + meal_formatted + '.txt'), "w+") as re:
     re.write(response)
