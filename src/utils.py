@@ -35,10 +35,8 @@ def find_names_by_indices(indices, names_list):
 # Retrieving food information from the file of all food
 def find_information_by_names(file_path, names):
     information = []
-
     with open(file_path, 'r') as file:
         lines = file.readlines()
-
         for name in names:
             found = False
             xname = name + '-'
@@ -53,7 +51,7 @@ def find_information_by_names(file_path, names):
 
             if not found:
                 information.append(" ")
-
+    
     text = ""
     for i in range(len(information)):
         text += names[i] + information[i] + "\n"
@@ -99,7 +97,7 @@ def meal_type(foods, meals):
 
     else: 
         meal_type = ' for lunch'
-
+        
     return meal_type
 
 
