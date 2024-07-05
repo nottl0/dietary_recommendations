@@ -4,7 +4,7 @@ import os
 import re
 
 """
-Promp_arguments.txt:
+Prompt_arguments.txt:
 /test/images/13516_jpg.rf.00db1669626040ff9aebc027c1131b2f.jpg 26
 /test/images/16299_jpg.rf.698531dc18a266a26474889921db4748.jpg 26
 /test/images/11378_jpg.rf.1d815d5c5dcc7627c4ba1b0b45e87496.jpg 26
